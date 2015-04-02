@@ -96,7 +96,8 @@ public class HomeController {
 		System.out.println("delete result : " + result);
 		System.out.println("delete test end");
 		
-		return "home";
+//		return "home";
+		return "sampleMenu";
 	}//END FO home()
 	
 	@RequestMapping(value = "/xml/*", method = RequestMethod.POST)
