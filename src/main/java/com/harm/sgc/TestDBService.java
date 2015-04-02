@@ -15,9 +15,9 @@ public class TestDBService {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<HashMap<String, String>> getCardList() throws Exception {
+	public List<HashMap<String, String>> getTestList() throws Exception {
 		return sqlSession.selectList("testSqlMapper.getCardList");
-	}//END OF getCardList()
+	}
  	
 	public List<CardBean> getCardList2(CardBean param) throws Exception {
 		return sqlSession.selectList("CardMapper.getCardList", param);

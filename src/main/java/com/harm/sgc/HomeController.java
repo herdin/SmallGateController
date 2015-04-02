@@ -28,6 +28,7 @@ import com.harm.sgc.TestDBService;
 /**
  * Handles requests for the application home page.
  */
+@RequestMapping(value = "/test")
 @Controller
 public class HomeController {
 	
