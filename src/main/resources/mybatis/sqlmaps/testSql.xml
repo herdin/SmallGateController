@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="testSqlMapper">
+
+	<select id="getCardList" parameterType="Map" resultType="HashMap" >
+	SELECT
+		CARD_ID
+		,CARD_DESC
+	FROM
+		CARD
+	</select>	
+		
+		
+		
+	<select id="getExampleList" parameterType="Map" resultType="HashMap" >
+               SELECT                
+                       CARD_NUM	,
+                       MENU_ID,
+                       CATEGORY,
+                       <![CDATA[REPLACE(REPLACE(TITLE, '&', '&amp;'), '·', '&middot;') TITLE,]]>
+                       <![CDATA[REPLACE(CONTENT, '·', '&middot;') CONTENT,]]>
+                       CONVENTION_DATE,
+                       DATE_FORMAT(CONVERT(CONVENTION_DATE, DATE), '%d') CONVENTION_DAY,
+         (SELECT FILE_NAME FROM BBS_FILE WHERE CONTENT_SEQ = CONTENT_SEQ AND FILE_SEQ > 0 ORDER BY FILE_SEQ LIMIT 1) FILE,
+         (SELECT ALT FROM BBS_FILE WHERE CONTENT_SEQ = CONTENT_SEQ AND FILE_SEQ > 0 ORDER BY FILE_SEQ LIMIT 1) ALT,
+                       REG_USER,
+                       REG_NM,  
+                       DATE_FORMAT(REG_DATE, '%Y-%m-%d') REG_DATE,
+                       UPD_USER,
+                       UPD_DATE,
+                       CONTENT_TYPE,
+                       COALESCE(READ_CNT, 0) READ_CNT,
+                       URL
+                       FROM BBS_CONTENT
+               ORDER BY CONTENT_SEQ DESC
+               limit ${startPage}, ${pageRow}
+	</select>
+</mapper>
+
