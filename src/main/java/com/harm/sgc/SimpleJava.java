@@ -56,7 +56,7 @@ public class SimpleJava {
 	
 	public void sendXmlStringToServer(String xmlString) throws IOException {
 		System.out.println("ENTER : " + this.getMethodName());
-		URL url = new URL("http://localhost:8080/sample/xml/d");
+		URL url = new URL("http://localhost:8080/sgc/xml/d");
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 		con.setDoInput(true);
