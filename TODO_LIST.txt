@@ -1,0 +1,3 @@
+1. add bean configuration lazy init for server start up performance
+2. need to config arch type [Controller - Repository ?is it normal?]
+3. Repository 

@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.harm.sgc">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

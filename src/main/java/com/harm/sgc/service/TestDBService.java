@@ -1,4 +1,4 @@
-package com.harm.sgc;
+package com.harm.sgc.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,20 +19,20 @@ public class TestDBService {
 		return sqlSession.selectList("testSqlMapper.getCardList");
 	}
  	
-	public List<CardBean> getCardList2(CardBean param) throws Exception {
-		return sqlSession.selectList("CardMapper.getCardList", param);
+	public List<CardBean> getCardList(CardBean param) throws Exception {
+		return sqlSession.selectList("CardMapper.selectCard", param);
 	}
 	
 	public int regCard(CardBean param) throws Exception {
-		return sqlSession.insert("CardMapper.regCard", param);
+		return sqlSession.insert("CardMapper.insertCard", param);
 	}
 	
 	public int modCard(CardBean param) throws Exception {
-		return sqlSession.update("CardMapper.modCard", param);
+		return sqlSession.update("CardMapper.updateCard", param);
 	}
 	
 	public int delCard(CardBean param) throws Exception {
-		return sqlSession.delete("CardMapper.delCard", param);
+		return sqlSession.delete("CardMapper.deleteCard", param);
 	}
 	
 }//END OF CLASS

@@ -9,7 +9,7 @@
 		<result property="cardDesc" column="CARD_DESC"/>
 	</resultMap>
 
-	<select id="getCardList" parameterType="com.harm.bean.CardBean" resultMap="CardBeanResultMap" >
+	<select id="selectCard" parameterType="com.harm.bean.CardBean" resultMap="CardBeanResultMap" >
 	SELECT	CARD_ID
 			,CARD_DESC
 	FROM	CARD
@@ -20,20 +20,19 @@
 			CARD_DESC = #{cardDesc}		</if>
 	</select>	
 
-
-	<insert id="regCard" parameterType="com.harm.bean.CardBean">
+	<insert id="insertCard" parameterType="com.harm.bean.CardBean">
 	INSERT INTO CARD
 			(CARD_ID,	CARD_DESC)
 	VALUES	(#{cardId},	#{cardDesc})
 	</insert>
 
-	<update id="modCard" parameterType="com.harm.bean.CardBean">
+	<update id="updateCard" parameterType="com.harm.bean.CardBean">
 	UPDATE	CARD
 	SET		CARD_DESC = #{cardDesc}
 	WHERE	CARD_ID = #{cardId}
 	</update>
 	
-	<delete id="delCard" parameterType="com.harm.bean.CardBean">
+	<delete id="deleteCard" parameterType="com.harm.bean.CardBean">
 	DELETE FROM	CARD
 	WHERE		CARD_ID = #{cardId}
 	

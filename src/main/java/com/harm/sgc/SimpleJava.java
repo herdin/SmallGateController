@@ -10,19 +10,29 @@ import java.nio.charset.StandardCharsets;
 
 import com.harm.schema.message.Message;
 import com.harm.util.XmlConverter;
+import com.harm.util.Constants.MESSAGE_ID;
 
 
 public class SimpleJava {
 
 	public static void main(String[] args) throws IOException {
 		
-		boolean XML_SEND_RECEIVE_TEST	= false;
-		boolean JAXB_CONVERT_TEST		= true;
+		String serverUrl = "http://localhost:8080/sgc/app/msg/xml/";
+		String schemaFullPath = "C:\\Users\\LGCNS\\git\\SmallGateController\\src\\main\\resources\\schema\\message.xsd";
+		boolean XML_SEND_RECEIVE_TEST	= true;
+		boolean JAXB_CONVERT_TEST		= false;
 		
 		if(XML_SEND_RECEIVE_TEST) {
 		
-			String param = "<xml><messageId>regCard</messageId><cardId>098098</cardId></xml>";
-			byte[] bytes = param.getBytes(StandardCharsets.UTF_8);
+			String sendXmlString = null;
+			String recvXmlString = null;
+			Message message = new Message();
+			message.setMessageId(MESSAGE_ID.REG_CARD.value());
+			message.setGateId("");
+			message.setCardId("0102");
+			sendXmlString = XmlConverter.convertJaxbToXml(Message.class, message, schemaFullPath);
+			byte[] bytes = sendXmlString.getBytes(StandardCharsets.UTF_8);
+			
 			System.out.println("bytes start.");
 			for(int i=0; i<bytes.length; i++) {
 				System.out.print(String.format("%02x", bytes[i]));
@@ -30,22 +40,22 @@ public class SimpleJava {
 			}
 			System.out.println("bytes end.");
 			
-			System.out.println("string start.");
+			System.out.println("string > byte > string start.");
 			String str = new String(bytes, StandardCharsets.UTF_8);
 			System.out.println(str);
-			System.out.println("string end.");
+			System.out.println("string > byte > string end.");
 		
 			SimpleJava sj = new SimpleJava();
-			sj.sendXmlStringToServer(param);
+			recvXmlString = sj.sendXmlStringToServer(serverUrl, sendXmlString);
+			System.out.println(recvXmlString);
 		}
 		
 		if(JAXB_CONVERT_TEST) {
-			String xmlString = "<message><messageId>123</messageId><deviceId>456</deviceId><cardId>789</cardId></message>";
-			String schemaFullPath = "C:\\spring-tool-suite\\sts-bundle\\workspace\\SpringMVCProject02\\src\\main\\resources\\schema\\message.xsd";
+			String xmlString = "<message><messageId>123</messageId><gateId>456</gateId><cardId>789</cardId></message>";
 //			String schemaFullPath = System.class.getResource("/com/spring/schema/").getPath() + "message.xsd";
 			Message message = (Message)XmlConverter.convertXmlToJaxb(Message.class, xmlString, schemaFullPath);
 			System.out.println(message.getMessageId());
-			System.out.println(message.getDeviceId());
+			System.out.println(message.getGateId());
 			System.out.println(message.getCardId());
 			
 			String xmlStringOut = XmlConverter.convertJaxbToXml(Message.class, message, schemaFullPath);
@@ -54,16 +64,16 @@ public class SimpleJava {
 	}//END OF MAIN
 
 	
-	public void sendXmlStringToServer(String xmlString) throws IOException {
+	public String sendXmlStringToServer(String serverUrl, String sendXmlString) throws IOException {
 		System.out.println("ENTER : " + this.getMethodName());
-		URL url = new URL("http://localhost:8080/sgc/xml/d");
+		URL url = new URL(serverUrl);
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 		con.setDoInput(true);
 		con.setDoOutput(true);
 		con.setRequestMethod("POST");
 		OutputStream out = con.getOutputStream();
-		out.write(xmlString.getBytes("UTF-8"));
+		out.write(sendXmlString.getBytes("UTF-8"));
 		out.flush();
 		out.close();
 		System.out.print("response code : ");
@@ -76,11 +86,12 @@ public class SimpleJava {
 			out2.write(data);
 		}
 		byte[] recvBytes = out2.toByteArray();
-		String recvString = new String(recvBytes, StandardCharsets.UTF_8);
-		System.out.println("response xml : " + recvString);
+		String recvXmlString = new String(recvBytes, StandardCharsets.UTF_8);
+		System.out.println("response xml : " + recvXmlString);
 		
 		
 		System.out.println("LEAVE : " + this.getMethodName());
+		return recvXmlString;
 	}//END OF sendXmlStringToServer()
 	
 	public String getMethodName() {
