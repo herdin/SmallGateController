@@ -40,4 +40,4 @@
 
 1. if you add file, add index for git.
 2. commit means save your file at your local repository.
-3. pull means save your file at your remote repository(gitHub).
+3. push means save your file at your remote repository(gitHub).
