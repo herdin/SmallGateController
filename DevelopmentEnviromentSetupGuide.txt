@@ -1,0 +1,43 @@
+
+1. Install Spring Toll Suite (STS below) (http://spring.io/tools)
+2. Install Apache Maven (http://maven.apache.org/download.cgi)
+	- binary zip ver.
+	- setting system enviroment variable (%MAVEN_HOME%bin, %JAVA_HOME%bin)
+	- test with command line : mvn -version
+	- no need to install plug-in (STS already has)
+	- config STS Maven setting. (EMBEDDED Maven to Installed Maven)
+	- rebuild global index in STS Maven repository View
+3. Install git plug-in to STS
+4. Import Project from gitHub (https://github.com/herdin/SmallGateController.git)
+5. Install MariaDB (https://mariadb.org/)
+
+## Belows are optional for newbie
+
+1. Add dependency
+	- mariadb jdbc connector
+	- mybatis-spring
+	- cglib-nodep
+	- and more.. junit?
+2. Mod web.xml
+	- add init-param to DispacherServlet : config file path : classpath:/whateveryouwantlocation/servlet-context.xml
+	- add/mod context-param : root-context.xml
+	- add encording filter
+3. Mod root-context.xml
+	- add dataSource > jdbc driver
+	- add sqlSession > mybatis spring sqlSession template
+	- add sqlSessionFactory > mybatis sqlSession Factory bean
+	- add transactionManager > jdbc data transaction manager
+4. Mod servlet-context.xml
+	- add annotation-driven
+	- add component-scan bas-package
+5. Add mybatis-config.xml (is used at root-context.xml/sqlSessionFactory bean's property)
+6. Add sqlMapper.xml for mybatis
+7. Usage
+	- use sqlSession with @Autowired
+	- use Repository with @Autowired, and package of Repository is set at servlet-context.xml 
+	
+## Belows are optional for git
+
+1. if you add file, add index for git.
+2. commit means save your file at your local repository.
+3. pull means save your file at your remote repository(gitHub).

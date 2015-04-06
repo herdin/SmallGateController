@@ -18,7 +18,7 @@ public class SimpleJava {
 	public static void main(String[] args) throws IOException {
 		
 		String serverUrl = "http://localhost:8080/sgc/app/msg/xml/";
-		String schemaFullPath = "C:\\Users\\LGCNS\\git\\SmallGateController\\src\\main\\resources\\schema\\message.xsd";
+		String schemaFullPath = "C:\\spring-tool-suite\\sts-bundle\\workspace\\SmallGateController\\src\\main\\resources\\schema\\message.xsd";
 		boolean XML_SEND_RECEIVE_TEST	= true;
 		boolean JAXB_CONVERT_TEST		= false;
 		
@@ -29,7 +29,7 @@ public class SimpleJava {
 			Message message = new Message();
 			message.setMessageId(MESSAGE_ID.REG_CARD.value());
 			message.setGateId("");
-			message.setCardId("0102");
+			message.setCardId("0103");
 			sendXmlString = XmlConverter.convertJaxbToXml(Message.class, message, schemaFullPath);
 			byte[] bytes = sendXmlString.getBytes(StandardCharsets.UTF_8);
 			
@@ -47,7 +47,6 @@ public class SimpleJava {
 		
 			SimpleJava sj = new SimpleJava();
 			recvXmlString = sj.sendXmlStringToServer(serverUrl, sendXmlString);
-			System.out.println(recvXmlString);
 		}
 		
 		if(JAXB_CONVERT_TEST) {

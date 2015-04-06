@@ -52,6 +52,11 @@ public class MessageController {
 					cardBean = new CardBean();
 					cardBean.setCardId(recvMessage.getCardId());
 					result = cardDBService.insert(cardBean);
+					if(result == 1) {
+						sendMessage.setMessageId(MESSAGE_ID.REG_PASS.value());
+						sendMessage.setCardId(recvMessage.getCardId());
+						sendMessage.setGateId(recvMessage.getGateId());
+					}
 					break;
 				case REQ_ACCS :
 					
@@ -62,10 +67,12 @@ public class MessageController {
 			}
 			
 			logger.debug("dao result : " + result);
-			
+			if(sendMessage.getMessageId() != null) {
+				this.sendMessageObjectToRes(res, sendMessage);
+			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}//END OF xmlProcessor()
 
