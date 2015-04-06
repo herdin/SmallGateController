@@ -17,9 +17,13 @@ import javax.xml.bind.util.ValidationEventCollector;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 public class XmlConverter {
+	
+	private static final Logger logger = LoggerFactory.getLogger(XmlConverter.class);
 	
 	public static Object convertXmlToJaxb(Class<?> clazz, String xmlString, String schemaFullPath) {
 		
@@ -38,9 +42,9 @@ public class XmlConverter {
 				throw new JAXBException("why null?");
 			}
 		} catch (JAXBException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (SAXException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		
 		return jaxbObj;
@@ -65,13 +69,15 @@ public class XmlConverter {
 			marshaller.marshal(jaxbObj, stringWriter);
 			xmlString = stringWriter.toString();
 			
-		} catch (Exception e) {
-			System.out.println("why convert error?");
+		} catch (JAXBException e) {
+			logger.error(e.getMessage(), e);
+		} catch (SAXException e) {
+			logger.error(e.getMessage(), e);
 		} finally {
 			try {
 				stringWriter.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 		}
 		

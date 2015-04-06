@@ -11,31 +11,32 @@
 	</resultMap>
 
 	<select id="selectGate" parameterType="com.harm.bean.GateBean" resultMap="GateBeanResultMap" >
-	SELECT	CARD_ID
-			,CARD_DESC
-	FROM	CARD
+	SELECT	GATE_ID
+			,GATE_DESC
+	FROM	GATE
 	WHERE	1 = 1
-			<if test="cardId != null">
-			AND	CARD_ID = #{cardId}		</if>
-			<if test="cardDesc != null">
-			CARD_DESC = #{cardDesc}		</if>
+			<if test="gateId != null">
+			AND	GATE_ID = #{gateId}		</if>
+			<if test="gateDesc != null">
+			GATE_DESC = #{gateDesc}		</if>
 	</select>	
 
-	<insert id="insertCard" parameterType="com.harm.bean.CardBean">
-	INSERT INTO CARD
-			(CARD_ID,	CARD_DESC)
-	VALUES	(#{cardId},	#{cardDesc})
+	<insert id="insertGate" parameterType="com.harm.bean.GateBean">
+	INSERT INTO GATE
+			(GATE_ID,	GATE_DESC,		GATE_PINGED_DATE)
+	VALUES	(#{gateId},	#{gateDesc},	#{gatePingedDate})
 	</insert>
 
-	<update id="updateCard" parameterType="com.harm.bean.CardBean">
-	UPDATE	CARD
-	SET		CARD_DESC = #{cardDesc}
-	WHERE	CARD_ID = #{cardId}
+	<update id="updateGate" parameterType="com.harm.bean.GateBean">
+	UPDATE	GATE
+	SET		GATE_DESC = #{gateDesc}
+			, GATE_PINGED_DATE = #{gatePingedDate}
+	WHERE	GATE_ID = #{gateId}
 	</update>
 	
-	<delete id="deleteCard" parameterType="com.harm.bean.CardBean">
-	DELETE FROM	CARD
-	WHERE		CARD_ID = #{cardId}
+	<delete id="deleteGate" parameterType="com.harm.bean.GateBean">
+	DELETE FROM	GATE
+	WHERE		GATE_ID = #{gateId}
 	
 	</delete>
 	

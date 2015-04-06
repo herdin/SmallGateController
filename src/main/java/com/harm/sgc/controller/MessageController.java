@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.harm.bean.CardBean;
 import com.harm.schema.message.Message;
 import com.harm.sgc.service.CardDBService;
+import com.harm.sgc.service.GateDBService;
 import com.harm.util.Constants;
+import com.harm.util.Constants.ERROR_MESSAGE;
 import com.harm.util.Constants.MESSAGE_ID;
 import com.harm.util.XmlConverter;
 
@@ -32,21 +34,15 @@ public class MessageController {
 	@Autowired
 	private CardDBService cardDBService;
 	
+	@Autowired
+	private GateDBService gateDBService;
+	
 	@RequestMapping(value = "/xml", method = RequestMethod.POST)
 	public void xmlProcessor(HttpServletRequest req, HttpServletResponse res) {
 		try {
-			String xmlString = this.recvXmlStringFromReq(req);
-			logger.debug("received xml : " + xmlString);
-			
-			Message message = (Message) XmlConverter.convertXmlToJaxb(Message.class, xmlString, Constants.MESSAGE_SCHEMA_PATH);
-			logger.debug(message.toString());
-			
-			MESSAGE_ID recvMessageId = null;
-			for(MESSAGE_ID messageId : MESSAGE_ID.values()) {
-				if(messageId.value().equals(message.getMessageId())) {
-					recvMessageId = messageId;
-				}
-			}
+			Message sendMessage = new Message();
+			Message recvMessage = this.recvMessageObjectFromReq(req);
+			MESSAGE_ID recvMessageId = distinguishingMessageId(recvMessage);
 			
 			int result = -1;
 			CardBean cardBean = null;
@@ -54,11 +50,14 @@ public class MessageController {
 			switch (recvMessageId) {
 				case REG_CARD :
 					cardBean = new CardBean();
-					cardBean.setCardId(message.getCardId());
+					cardBean.setCardId(recvMessage.getCardId());
 					result = cardDBService.insert(cardBean);
 					break;
 				case REQ_ACCS :
+					
+					break;
 				default :
+					logger.info(ERROR_MESSAGE.INVALID_MESSAGE_ID.value());
 					break;
 			}
 			
@@ -70,10 +69,12 @@ public class MessageController {
 		}
 	}//END OF xmlProcessor()
 
-	private String recvXmlStringFromReq(HttpServletRequest req) {
+	private Message recvMessageObjectFromReq(HttpServletRequest req) {
 		BufferedInputStream reqIn = null;
 		ByteArrayOutputStream byteOut = null;
 		byte[] bytes = null;
+		Message message = null;
+		String xmlString = null;
 		
 		try {
 			reqIn = new BufferedInputStream(req.getInputStream());
@@ -87,25 +88,40 @@ public class MessageController {
 			
 			bytes = byteOut.toByteArray();
 			
+			xmlString = new String(bytes, StandardCharsets.UTF_8);
+			logger.debug("received xml : " + xmlString);
+			
+			message = (Message) XmlConverter.convertXmlToJaxb(Message.class, xmlString, Constants.MESSAGE_SCHEMA_PATH);
+			
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} finally {
 			try {
 				byteOut.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 		}
 		
-		return new String(bytes, StandardCharsets.UTF_8);
-	}//END OF recvXmlStringFromReq()
+		return message;
+	}//END OF FUNCTION
 
-	private void sendXmlStringToRes(HttpServletResponse res) {
+	private MESSAGE_ID distinguishingMessageId(Message message) {
+		MESSAGE_ID recvMessageId = null;
+		for(MESSAGE_ID messageId : MESSAGE_ID.values()) {
+			if(messageId.value().equals(message.getMessageId())) {
+				recvMessageId = messageId;
+			}
+		}
+		return recvMessageId;
+	}//END OF FUNCTION
+	
+	private void sendMessageObjectToRes(HttpServletResponse res, Message message) {
 		BufferedOutputStream resOut = null;
 		try {
 			resOut = new BufferedOutputStream(res.getOutputStream());
-			String param = "<xml><messageId>regOk</messageId><cardId>098098</cardId></xml>";
-			resOut.write(param.getBytes(StandardCharsets.UTF_8));
+			String xmlString = XmlConverter.convertJaxbToXml(Message.class, message, Constants.MESSAGE_SCHEMA_PATH);
+			resOut.write(xmlString.getBytes(StandardCharsets.UTF_8));
 			resOut.flush();
 			resOut.close();
 		} catch (IOException e) {
@@ -117,6 +133,6 @@ public class MessageController {
 				e.printStackTrace();
 			}
 		}
-	}
+	}//END OF FUNCTION
 	
 }//END OF CLASS

@@ -12,7 +12,6 @@ public class Constants {
 		;
 		
 		private String value;
-		
 		private MESSAGE_ID(String value) {
 			this.value = value;
 		}
@@ -21,5 +20,16 @@ public class Constants {
 		}
 	}//END OF ENUM
 	
+	public enum ERROR_MESSAGE {
+		INVALID_MESSAGE_ID	("invalid message id")
+		;
+		private String value;
+		private ERROR_MESSAGE(String value) {
+			this.value = value;
+		}
+		public String value() {
+			return this.value;
+		}
+	}
 	
 }//END OF CLASS
