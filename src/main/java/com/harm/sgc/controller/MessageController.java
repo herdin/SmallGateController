@@ -52,13 +52,14 @@ public class MessageController {
 			CardBean cardBean = null;
 			
 			switch (recvMessageId) {
-			case REG_CARD :
-				cardBean = new CardBean();
-				cardBean.setCardId(message.getCardId());
-				result = cardDBService.insert(cardBean);
-				break;
-			default :
-				break;
+				case REG_CARD :
+					cardBean = new CardBean();
+					cardBean.setCardId(message.getCardId());
+					result = cardDBService.insert(cardBean);
+					break;
+				case REQ_ACCS :
+				default :
+					break;
 			}
 			
 			logger.debug("dao result : " + result);

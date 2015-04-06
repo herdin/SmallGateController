@@ -3,11 +3,12 @@ package com.harm.util;
 import com.harm.schema.message.Message;
 
 public class Constants {
-	
+	// fyi : project > properties > deployment assembly
 	public static final String MESSAGE_SCHEMA_PATH = Message.class.getResource("/schema").getPath() + "message.xsd";
 	
 	public enum MESSAGE_ID {
-		REG_CARD	("regCard")		
+		REG_CARD	("regCard"),
+		REQ_ACCS	("reqAssc")
 		;
 		
 		private String value;
@@ -18,7 +19,7 @@ public class Constants {
 		public String value() {
 			return this.value;
 		}
-	}
+	}//END OF ENUM
 	
 	
 }//END OF CLASS

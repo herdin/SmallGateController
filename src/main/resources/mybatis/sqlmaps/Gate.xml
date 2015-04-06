@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="GateMapper">
+	
+	<resultMap id="GateBeanResultMap" type="com.harm.bean.GateBean">
+		<id		property="gateId"			column="GATE_ID"/>
+		<result	property="gateDesc"			column="GATE_DESC"/>
+		<result	property="gatePingedDate"	column="GATE_PINGED_DATE"/>
+	</resultMap>
+
+	<select id="selectGate" parameterType="com.harm.bean.GateBean" resultMap="GateBeanResultMap" >
+	SELECT	CARD_ID
+			,CARD_DESC
+	FROM	CARD
+	WHERE	1 = 1
+			<if test="cardId != null">
+			AND	CARD_ID = #{cardId}		</if>
+			<if test="cardDesc != null">
+			CARD_DESC = #{cardDesc}		</if>
+	</select>	
+
+	<insert id="insertCard" parameterType="com.harm.bean.CardBean">
+	INSERT INTO CARD
+			(CARD_ID,	CARD_DESC)
+	VALUES	(#{cardId},	#{cardDesc})
+	</insert>
+
+	<update id="updateCard" parameterType="com.harm.bean.CardBean">
+	UPDATE	CARD
+	SET		CARD_DESC = #{cardDesc}
+	WHERE	CARD_ID = #{cardId}
+	</update>
+	
+	<delete id="deleteCard" parameterType="com.harm.bean.CardBean">
+	DELETE FROM	CARD
+	WHERE		CARD_ID = #{cardId}
+	
+	</delete>
+	
+</mapper>
+
