@@ -1,8 +1,8 @@
 //
-// ÀÌ ÆÄÀÏÀº JAXB(JavaTM Architecture for XML Binding) ÂüÁ¶ ±¸Çö 2.2.8-b130911.1802 ¹öÀüÀ» ÅëÇØ »ý¼ºµÇ¾ú½À´Ï´Ù. 
-// <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>¸¦ ÂüÁ¶ÇÏ½Ê½Ã¿À. 
-// ÀÌ ÆÄÀÏÀ» ¼öÁ¤ÇÏ¸é ¼Ò½º ½ºÅ°¸¶¸¦ ÀçÄÄÆÄÀÏÇÒ ¶§ ¼öÁ¤ »çÇ×ÀÌ ¼Õ½ÇµË´Ï´Ù. 
-// »ý¼º ³¯Â¥: 2015.04.06 ½Ã°£ 01:29:30 PM KST 
+// ì´ íŒŒì¼ì€ JAXB(JavaTM Architecture for XML Binding) ì°¸ì¡° êµ¬í˜„ 2.2.8-b130911.1802 ë²„ì „ì„ í†µí•´ ìƒì„±ë˜ì—ˆìŠµë‹ˆë‹¤. 
+// <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>ë¥¼ ì°¸ì¡°í•˜ì‹­ì‹œì˜¤. 
+// ì´ íŒŒì¼ì„ ìˆ˜ì •í•˜ë©´ ì†ŒìŠ¤ ìŠ¤í‚¤ë§ˆë¥¼ ìž¬ì»´íŒŒì¼í•  ë•Œ ìˆ˜ì • ì‚¬í•­ì´ ì†ì‹¤ë©ë‹ˆë‹¤. 
+// ìƒì„± ë‚ ì§œ: 2015.04.08 ì‹œê°„ 06:38:36 PM KST 
 //
 
 

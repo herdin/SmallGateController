@@ -1,3 +1,22 @@
 1. add bean configuration lazy init for server start up performance
 2. need to config arch type [Controller - Repository ?is it normal?]
-3. Repository 
+3. Repository
+
+MESSAGE FROM DEVCIE(GATE+CARD_REGISTER)
+ - REG_CARD (request register card)
+ - REQ_ASSC (request accessable)
+ 
+MESSAGE TO DEVICE
+ - REG_PASS (
+ - REG_FAIL
+ - REQ_PASS
+ - REQ_FAIL
+ 
+ 
+ 		REG_CARD	("regCard"),
+		REG_PASS	("regPass"),
+		REG_FAIL	("regFail"),
+		
+		REQ_ACCS	("reqAssc"),
+		REQ_PASS	("reqPass"),
+		REQ_FAIL	("reqFail")

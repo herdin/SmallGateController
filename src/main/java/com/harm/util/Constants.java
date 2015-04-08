@@ -8,10 +8,10 @@ public class Constants {
 	
 	public enum MESSAGE_ID {
 		REG_CARD	("regCard"),
-		REG_PASS	("regPass"),
-		
 		REQ_ACCS	("reqAssc"),
-		REQ_PASS	("reqPass")
+		
+		RES_PASS	("regPass"),
+		RES_FAIL	("regFail"),
 		;
 		
 		private String value;

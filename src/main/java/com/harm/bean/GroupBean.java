@@ -1,9 +1,9 @@
 package com.harm.bean;
 
-public class groupAreaBean {
+public class GroupBean {
 	
 	private String groupId;
-	private String areaId;
+	private String groupDesc;
 	
 	public String getGroupId() {
 		return groupId;
@@ -11,11 +11,11 @@ public class groupAreaBean {
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
 	}
-	public String getAreaId() {
-		return areaId;
+	public String getGroupDesc() {
+		return groupDesc;
 	}
-	public void setAreaId(String areaId) {
-		this.areaId = areaId;
+	public void setGroupDesc(String groupDesc) {
+		this.groupDesc = groupDesc;
 	}
 	
 }

@@ -40,5 +40,16 @@
 	
 	</delete>
 	
+	<select id="selectGate" parameterType="com.harm.bean.GateBean" resultMap="GateBeanResultMap" >
+	SELECT	GATE_ID
+			,GATE_DESC
+	FROM	GATE
+	WHERE	1 = 1
+			<if test="gateId != null">
+			AND	GATE_ID = #{gateId}		</if>
+			<if test="gateDesc != null">
+			GATE_DESC = #{gateDesc}		</if>
+	</select>
+	
 </mapper>
 

@@ -53,7 +53,7 @@ public class MessageController {
 					cardBean.setCardId(recvMessage.getCardId());
 					result = cardDBService.insert(cardBean);
 					if(result == 1) {
-						sendMessage.setMessageId(MESSAGE_ID.REG_PASS.value());
+						sendMessage.setMessageId(MESSAGE_ID.RES_PASS.value());
 						sendMessage.setCardId(recvMessage.getCardId());
 						sendMessage.setGateId(recvMessage.getGateId());
 					}

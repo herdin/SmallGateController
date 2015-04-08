@@ -1,6 +1,6 @@
 package com.harm.bean;
 
-public class cardGroupBean {
+public class CardGroupBean {
 	
 	private String cardId;
 	private String groupId;
