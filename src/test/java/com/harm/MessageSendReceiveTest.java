@@ -12,7 +12,7 @@ import com.harm.util.Constants.MESSAGE_ID;
 import com.harm.util.XmlConverter;
 
 
-public class SimpleJava {
+public class MessageSendReceiveTest {
 
 	public static void main(String[] args) throws IOException {
 		
@@ -37,6 +37,7 @@ public class SimpleJava {
 		if(XML_SEND_RECEIVE_TEST) {
 		
 			String sendXmlString = null;
+			@SuppressWarnings("unused")
 			String recvXmlString = null;
 			Message message = new Message();
 //			message.setMessageId(MESSAGE_ID.REG_CARD.value());
@@ -58,7 +59,7 @@ public class SimpleJava {
 			System.out.println(str);
 			System.out.println("string > byte > string end.");
 		
-			SimpleJava sj = new SimpleJava();
+			MessageSendReceiveTest sj = new MessageSendReceiveTest();
 			recvXmlString = sj.sendRecvXmlStringToServer(serverMessageUrl, sendXmlString);
 		}
 

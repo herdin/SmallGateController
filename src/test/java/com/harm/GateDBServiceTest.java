@@ -1,12 +1,12 @@
 package com.harm;
 
 
-import static com.harm.test.service.DBServiceTest.DELETE_SUCCESS_FLAG;
-import static com.harm.test.service.DBServiceTest.INSERT_SUCCESS_FLAG;
-import static com.harm.test.service.DBServiceTest.RESULT;
-import static com.harm.test.service.DBServiceTest.SELECT_SUCCESS_FLAG;
-import static com.harm.test.service.DBServiceTest.UPDATE_SUCCESS_FLAG;
-import static com.harm.test.service.DBServiceTest.WHOLE_TEST_SUCCCESS;
+import static com.harm.DBServiceTest.DELETE_SUCCESS_FLAG;
+import static com.harm.DBServiceTest.INSERT_SUCCESS_FLAG;
+import static com.harm.DBServiceTest.RESULT;
+import static com.harm.DBServiceTest.SELECT_SUCCESS_FLAG;
+import static com.harm.DBServiceTest.UPDATE_SUCCESS_FLAG;
+import static com.harm.DBServiceTest.WHOLE_TEST_SUCCCESS;
 
 import java.util.List;
 
