@@ -68,6 +68,8 @@ public class MessageController {
 					}
 					sendMessage.setCardId(recvMessage.getCardId());
 					sendMessage.setGateId(recvMessage.getGateId());
+					
+					//FIXME ADD HERE INSERT TO ACCESSHISOTRY
 					break;
 				default :
 					logger.info(ERROR_MESSAGE.INVALID_MESSAGE_ID.value());
