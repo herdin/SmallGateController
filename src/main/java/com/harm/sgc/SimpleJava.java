@@ -5,12 +5,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 
 import com.harm.schema.message.Message;
-import com.harm.util.XmlConverter;
 import com.harm.util.Constants.MESSAGE_ID;
+import com.harm.util.XmlConverter;
 
 
 public class SimpleJava {

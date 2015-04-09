@@ -8,7 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
-import com.harm.bean.GateBean;
+import com.harm.bean.AccessHistoryBean;
 import com.harm.bean.GateBean;
 
 @Repository
@@ -63,4 +63,8 @@ public class GateDBService implements DBService<GateBean> {
 		return result;
 	}//END OF FUNCTION
 
+	public boolean isAccessable(AccessHistoryBean accessBean) {
+		return false;
+	}//END OF FUNCTION
+	
 }//END OF CLASS

@@ -87,38 +87,5 @@ public class simpleJUnitTest {
 		Assert.assertThat(RESULT, org.hamcrest.CoreMatchers.is(WHOLE_TEST_SUCCCESS));
 	}//END OF FUNCTION
 	
-	@Test
-	@Rollback(true)
-	public void GateTest() {
-		int RESULT = 0;
-		
-		GateBean insertGateBean = new GateBean();
-		insertGateBean.setGateId("TEST_INSERT_GATE_ID");
-		insertGateBean.setGateDesc("TEST_INSERT_GATE_DESC");
-		if(gateDBService.insert(insertGateBean) > 0) {
-			RESULT += INSERT_SUCCESS_FLAG;
-		}
-		
-		List<GateBean> gateBeans = gateDBService.select(null);
-		for(GateBean gatebean : gateBeans) {
-			logger.debug(gatebean.getGateId());
-		}
-		RESULT += SELECT_SUCCESS_FLAG;
-		
-		GateBean updateGateBean = new GateBean();
-		updateGateBean.setGateId(insertGateBean.getGateId());
-		updateGateBean.setGateDesc("TEST_UPDATE_GATE_DESC");
-		if(gateDBService.update(updateGateBean) > 0) {
-			RESULT += UPDATE_SUCCESS_FLAG;
-		}
-		
-		GateBean deleteGateBean = new GateBean();
-		deleteGateBean.setGateId(insertGateBean.getGateId());
-		if(gateDBService.delete(deleteGateBean) > 0) {
-			RESULT += DELETE_SUCCESS_FLAG;
-		}
-		
-		Assert.assertThat(RESULT, org.hamcrest.CoreMatchers.is(WHOLE_TEST_SUCCCESS));
-	}
 
 }//END OF CLASS
