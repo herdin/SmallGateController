@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.harm.bean.AccessHistoryBean;
 import com.harm.bean.CardBean;
 import com.harm.schema.message.Message;
 import com.harm.sgc.service.CardDBService;
@@ -44,29 +45,35 @@ public class MessageController {
 			Message recvMessage = this.recvMessageObjectFromReq(req);
 			MESSAGE_ID recvMessageId = distinguishingMessageId(recvMessage);
 			
-			int result = -1;
-			CardBean cardBean = null;
-			
 			switch (recvMessageId) {
 				case REG_CARD :
-					cardBean = new CardBean();
+					CardBean cardBean = new CardBean();
 					cardBean.setCardId(recvMessage.getCardId());
-					result = cardDBService.insert(cardBean);
-					if(result == 1) {
+					
+					if(cardDBService.insert(cardBean) == 1) {
 						sendMessage.setMessageId(MESSAGE_ID.RES_PASS.value());
 						sendMessage.setCardId(recvMessage.getCardId());
 						sendMessage.setGateId(recvMessage.getGateId());
 					}
 					break;
 				case REQ_ACCS :
+					AccessHistoryBean accessHistoryBean = new AccessHistoryBean();
+					accessHistoryBean.setCardId(recvMessage.getCardId());
+					accessHistoryBean.setGateId(recvMessage.getGateId());
 					
+					if(gateDBService.isAccessable(accessHistoryBean)) {
+						sendMessage.setMessageId(MESSAGE_ID.RES_PASS.value());
+					} else {
+						sendMessage.setMessageId(MESSAGE_ID.RES_FAIL.value());
+					}
+					sendMessage.setCardId(recvMessage.getCardId());
+					sendMessage.setGateId(recvMessage.getGateId());
 					break;
 				default :
 					logger.info(ERROR_MESSAGE.INVALID_MESSAGE_ID.value());
 					break;
 			}
 			
-			logger.debug("dao result : " + result);
 			if(sendMessage.getMessageId() != null) {
 				this.sendMessageObjectToRes(res, sendMessage);
 			}
@@ -113,10 +120,10 @@ public class MessageController {
 		return message;
 	}//END OF FUNCTION
 
-	private MESSAGE_ID distinguishingMessageId(Message message) {
+	private MESSAGE_ID distinguishingMessageId(Message RecvMessage) {
 		MESSAGE_ID recvMessageId = null;
 		for(MESSAGE_ID messageId : MESSAGE_ID.values()) {
-			if(messageId.value().equals(message.getMessageId())) {
+			if(messageId.value().equals(RecvMessage.getMessageId())) {
 				recvMessageId = messageId;
 			}
 		}

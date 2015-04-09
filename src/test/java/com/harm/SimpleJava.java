@@ -1,4 +1,4 @@
-package com.harm.sgc;
+package com.harm;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,17 +18,31 @@ public class SimpleJava {
 		
 		String serverUrl = "http://localhost:8080/sgc/app/msg/xml/";
 		String schemaFullPath = "C:\\spring-tool-suite\\sts-bundle\\workspace\\SmallGateController\\src\\main\\resources\\schema\\message.xsd";
-		boolean XML_SEND_RECEIVE_TEST	= true;
+		
 		boolean JAXB_CONVERT_TEST		= false;
+		boolean XML_SEND_RECEIVE_TEST	= true;
+
+		if(JAXB_CONVERT_TEST) {
+			String xmlString = "<message><messageId>123</messageId><gateId>456</gateId><cardId>789</cardId></message>";
+//			String schemaFullPath = System.class.getResource("/com/spring/schema/").getPath() + "message.xsd";
+			Message message = (Message)XmlConverter.convertXmlToJaxb(Message.class, xmlString, schemaFullPath);
+			System.out.println(message.getMessageId());
+			System.out.println(message.getGateId());
+			System.out.println(message.getCardId());
+			
+			String xmlStringOut = XmlConverter.convertJaxbToXml(Message.class, message, schemaFullPath);
+			System.out.println(xmlStringOut);
+		}
 		
 		if(XML_SEND_RECEIVE_TEST) {
 		
 			String sendXmlString = null;
 			String recvXmlString = null;
 			Message message = new Message();
-			message.setMessageId(MESSAGE_ID.REG_CARD.value());
-			message.setGateId("");
-			message.setCardId("0103");
+//			message.setMessageId(MESSAGE_ID.REG_CARD.value());
+			message.setMessageId(MESSAGE_ID.REQ_ACCS.value());
+			message.setGateId("GT002");
+			message.setCardId("0101");
 			sendXmlString = XmlConverter.convertJaxbToXml(Message.class, message, schemaFullPath);
 			byte[] bytes = sendXmlString.getBytes(StandardCharsets.UTF_8);
 			
@@ -45,24 +59,13 @@ public class SimpleJava {
 			System.out.println("string > byte > string end.");
 		
 			SimpleJava sj = new SimpleJava();
-			recvXmlString = sj.sendXmlStringToServer(serverUrl, sendXmlString);
+			recvXmlString = sj.sendRecvXmlStringToServer(serverUrl, sendXmlString);
 		}
-		
-		if(JAXB_CONVERT_TEST) {
-			String xmlString = "<message><messageId>123</messageId><gateId>456</gateId><cardId>789</cardId></message>";
-//			String schemaFullPath = System.class.getResource("/com/spring/schema/").getPath() + "message.xsd";
-			Message message = (Message)XmlConverter.convertXmlToJaxb(Message.class, xmlString, schemaFullPath);
-			System.out.println(message.getMessageId());
-			System.out.println(message.getGateId());
-			System.out.println(message.getCardId());
-			
-			String xmlStringOut = XmlConverter.convertJaxbToXml(Message.class, message, schemaFullPath);
-			System.out.println(xmlStringOut);
-		}
+
 	}//END OF MAIN
 
 	
-	public String sendXmlStringToServer(String serverUrl, String sendXmlString) throws IOException {
+	public String sendRecvXmlStringToServer(String serverUrl, String sendXmlString) throws IOException {
 		System.out.println("ENTER : " + this.getMethodName());
 		URL url = new URL(serverUrl);
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();

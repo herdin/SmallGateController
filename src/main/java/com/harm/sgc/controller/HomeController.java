@@ -27,6 +27,7 @@ import com.harm.schema.message.Message;
 import com.harm.sgc.service.TestDBService;
 
 /**
+ * FOR ONLY TEST.
  * Handles requests for the application home page.
  */
 @RequestMapping(value = "/test")

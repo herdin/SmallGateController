@@ -5,31 +5,39 @@
 <mapper namespace="GateMapper">
 	
 	<resultMap id="GateBeanResultMap" type="com.harm.bean.GateBean">
-		<id		property="gateId"			column="GATE_ID"/>
-		<result	property="gateDesc"			column="GATE_DESC"/>
-		<result	property="gatePingedDate"	column="GATE_PINGED_DATE"/>
+		<id		property="gateId"			column="GATE_ID"			/>
+		<result	property="gateDesc"			column="GATE_DESC"			/>
+		<result	property="areaId"			column="AREA_ID"			/>
+		<result	property="gatePingedDate"	column="GATE_PINGED_DATE"	/>
 	</resultMap>
 
 	<select id="selectGate" parameterType="com.harm.bean.GateBean" resultMap="GateBeanResultMap" >
-	SELECT	GATE_ID
-			,GATE_DESC
+	SELECT	  GATE_ID
+			, GATE_DESC
+			, AREA_ID
+			, GATE_PINGED_DATE
 	FROM	GATE
 	WHERE	1 = 1
 			<if test="gateId != null">
-			AND	GATE_ID = #{gateId}		</if>
+			AND	GATE_ID = #{gateId}					</if>
 			<if test="gateDesc != null">
-			GATE_DESC = #{gateDesc}		</if>
+			GATE_DESC = #{gateDesc}					</if>
+			<if test="areaId != null">
+			AREA_ID = #{areaId}						</if>
+			<if test="gatePingedDate != null">
+			GATE_PINGED_DATE = #{gatePingedDate}	</if>
 	</select>	
 
 	<insert id="insertGate" parameterType="com.harm.bean.GateBean">
 	INSERT INTO GATE
-			(GATE_ID,	GATE_DESC,		GATE_PINGED_DATE)
-	VALUES	(#{gateId},	#{gateDesc},	#{gatePingedDate})
+			(GATE_ID,	GATE_DESC,		AREA_ID,	GATE_PINGED_DATE)
+	VALUES	(#{gateId},	#{gateDesc},	#{areaId},	#{gatePingedDate})
 	</insert>
 
 	<update id="updateGate" parameterType="com.harm.bean.GateBean">
 	UPDATE	GATE
-	SET		GATE_DESC = #{gateDesc}
+	SET		  GATE_DESC = #{gateDesc}
+			, AREA_ID = #{areaId}
 			, GATE_PINGED_DATE = #{gatePingedDate}
 	WHERE	GATE_ID = #{gateId}
 	</update>
@@ -40,15 +48,19 @@
 	
 	</delete>
 	
-	<select id="selectGate" parameterType="com.harm.bean.GateBean" resultMap="GateBeanResultMap" >
-	SELECT	GATE_ID
-			,GATE_DESC
-	FROM	GATE
-	WHERE	1 = 1
-			<if test="gateId != null">
-			AND	GATE_ID = #{gateId}		</if>
-			<if test="gateDesc != null">
-			GATE_DESC = #{gateDesc}		</if>
+	<resultMap id="AccessHistoryResultMap" type="com.harm.bean.AccessHistoryBean">
+		<id		property="cardId"	column="CARD_ID"	/>
+		<result	property="gateId"	column="GATE_ID"	/>
+	</resultMap>
+	
+	<select id="isAccessable" parameterType="com.harm.bean.AccessHistoryBean" resultMap="AccessHistoryResultMap" >
+	SELECT	  CG.CARD_ID
+			, CG.GROUP_ID
+	FROM CARDGROUP CG
+	JOIN GROUPAREA GA ON (CG.GROUP_ID = GA.GROUP_ID)
+	JOIN GATE G ON (GA.AREA_ID = G.AREA_ID AND G.GATE_ID = #{gateId})
+	WHERE CG.CARD_ID = #{cardId}
+	LIMIT 1
 	</select>
 	
 </mapper>

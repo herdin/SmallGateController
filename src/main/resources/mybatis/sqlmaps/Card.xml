@@ -5,8 +5,8 @@
 <mapper namespace="CardMapper">
 	
 	<resultMap id="CardBeanResultMap" type="com.harm.bean.CardBean">
-		<id		property="cardId"	column="CARD_ID"/>
-		<result	property="cardDesc"	column="CARD_DESC"/>
+		<id		property="cardId"	column="CARD_ID"	/>
+		<result	property="cardDesc"	column="CARD_DESC"	/>
 	</resultMap>
 
 	<select id="selectCard" parameterType="com.harm.bean.CardBean" resultMap="CardBeanResultMap" >

@@ -1,4 +1,11 @@
-package com.harm.test;
+package com.harm;
+
+
+import static com.harm.test.service.DBServiceTest.DELETE_SUCCESS_FLAG;
+import static com.harm.test.service.DBServiceTest.INSERT_SUCCESS_FLAG;
+import static com.harm.test.service.DBServiceTest.SELECT_SUCCESS_FLAG;
+import static com.harm.test.service.DBServiceTest.UPDATE_SUCCESS_FLAG;
+import static com.harm.test.service.DBServiceTest.WHOLE_TEST_SUCCCESS;
 
 import java.util.List;
 
@@ -17,31 +24,19 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Log4jConfigurer;
 
 import com.harm.bean.CardBean;
-import com.harm.bean.GateBean;
 import com.harm.sgc.service.CardDBService;
-import com.harm.sgc.service.GateDBService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
 		"file:src/main/resources/spring/appServlet-context.xml",
 		"file:src/main/resources/spring/root-context.xml"})
 @Transactional
-public class simpleJUnitTest {
-
-	private Logger logger = LoggerFactory.getLogger(simpleJUnitTest.class);
+public class CardDBServiceTest {
 	
-	private int RESULT = 0;
-	private final int SELECT_SUCCESS_FLAG =    1;
-	private final int INSERT_SUCCESS_FLAG =   10;
-	private final int UPDATE_SUCCESS_FLAG =  100; 
-	private final int DELETE_SUCCESS_FLAG = 1000;
-	private final int WHOLE_TEST_SUCCCESS = 1111;
+	private Logger logger = LoggerFactory.getLogger(CardDBServiceTest.class);
 	
 	@Autowired
 	private CardDBService cardDBService;
-	
-	@Autowired
-	private GateDBService gateDBService;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -86,6 +81,4 @@ public class simpleJUnitTest {
 		
 		Assert.assertThat(RESULT, org.hamcrest.CoreMatchers.is(WHOLE_TEST_SUCCCESS));
 	}//END OF FUNCTION
-	
-
 }//END OF CLASS

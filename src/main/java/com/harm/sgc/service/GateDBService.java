@@ -63,8 +63,17 @@ public class GateDBService implements DBService<GateBean> {
 		return result;
 	}//END OF FUNCTION
 
-	public boolean isAccessable(AccessHistoryBean accessBean) {
-		return false;
+	public boolean isAccessable(AccessHistoryBean param) {
+		boolean result = false;
+		try {
+			AccessHistoryBean bean = sqlSession.selectOne("GateMapper.isAccessable", param);
+			if(bean != null) {
+				result = true;
+			}
+		} catch (DataAccessException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return result;
 	}//END OF FUNCTION
 	
 }//END OF CLASS
