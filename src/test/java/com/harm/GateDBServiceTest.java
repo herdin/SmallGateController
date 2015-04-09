@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Log4jConfigurer;
 
+import com.harm.bean.AccessHistoryBean;
 import com.harm.bean.GateBean;
 import com.harm.sgc.service.GateDBService;
 
@@ -80,7 +81,13 @@ public class GateDBServiceTest {
 			RESULT += DELETE_SUCCESS_FLAG;
 		}
 		
+		AccessHistoryBean isAccessableBean = new AccessHistoryBean();
+		isAccessableBean.setCardId("TEST_CARD_ID");
+		isAccessableBean.setGateId("TEST_GATE_ID");
+		boolean result = gateDBService.isAccessable(isAccessableBean);
+		
 		Assert.assertThat(RESULT, org.hamcrest.CoreMatchers.is(WHOLE_TEST_SUCCCESS));
+		Assert.assertThat(true, org.hamcrest.CoreMatchers.is(true));
 	}//END OF FUNCTION
 
 }//END OF CLASS

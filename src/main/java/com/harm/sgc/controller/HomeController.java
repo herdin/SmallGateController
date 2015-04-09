@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.harm.bean.CardBean;
 import com.harm.schema.message.Message;
-import com.harm.sgc.service.TestDBService;
+import com.harm.sgc.service.CardDBService;
 
 /**
  * FOR ONLY TEST.
@@ -40,12 +40,12 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@Autowired
-	private TestDBService testDbService;
+	private CardDBService cardDbService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) throws Exception {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		logger.debug("testDbService object id : " + this.testDbService.hashCode());
+		logger.debug("testDbService object id : " + this.cardDbService.hashCode());
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -70,7 +70,7 @@ public class HomeController {
 		logger.debug("select test start");
 		CardBean selectParam = new CardBean();
 		selectParam.setCardId("234234234");
-		List<CardBean> selectResults = testDbService.getCardList(selectParam);
+		List<CardBean> selectResults = cardDbService.select(selectParam);
 		for(CardBean CBean : selectResults) {
 			logger.debug(CBean.getCardId() + "/" + CBean.getCardDesc());
 		}
@@ -80,22 +80,22 @@ public class HomeController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		CardBean insertParam = new CardBean();
 		insertParam.setCardId(sdf.format(new Date()));
-		int result = testDbService.regCard(insertParam);
+		int result = cardDbService.insert(insertParam);
 		logger.debug("insert result : " + result);
 		logger.debug("insert test end");
 		
 		logger.debug("update test start");
-		selectResults = testDbService.getCardList(insertParam);
+		selectResults = cardDbService.select(insertParam);
 		CardBean updateParam = selectResults.get(0);
 		updateParam.setCardDesc("card desc");
-		result = testDbService.modCard(updateParam);
+		result = cardDbService.update(updateParam);
 		logger.debug("update result : " + result);
 		logger.debug("update test end");
 		
 		logger.debug("delete test start");
 		CardBean delParam = new CardBean();
 		delParam.setCardId("20150330180312");
-		result = testDbService.delCard(delParam);
+		result = cardDbService.delete(delParam);
 		logger.debug("delete result : " + result);
 		logger.debug("delete test end");
 		
