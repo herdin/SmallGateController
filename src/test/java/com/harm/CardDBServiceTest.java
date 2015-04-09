@@ -1,8 +1,8 @@
 package com.harm;
 
-
 import static com.harm.DBServiceTest.DELETE_SUCCESS_FLAG;
 import static com.harm.DBServiceTest.INSERT_SUCCESS_FLAG;
+import static com.harm.DBServiceTest.RESULT;
 import static com.harm.DBServiceTest.SELECT_SUCCESS_FLAG;
 import static com.harm.DBServiceTest.UPDATE_SUCCESS_FLAG;
 import static com.harm.DBServiceTest.WHOLE_TEST_SUCCCESS;
@@ -51,7 +51,7 @@ public class CardDBServiceTest {
 	@Test
 	@Rollback(true)
 	public void CardTest() {
-		int RESULT = 0;
+		RESULT = 0;
 		
 		CardBean insertCardBean = new CardBean();
 		insertCardBean.setCardId("TEST_INSERT_CARD_ID");
