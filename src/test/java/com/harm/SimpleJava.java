@@ -16,7 +16,7 @@ public class SimpleJava {
 
 	public static void main(String[] args) throws IOException {
 		
-		String serverUrl = "http://localhost:8080/sgc/app/msg/xml/";
+		String serverMessageUrl = "http://localhost:8080/sgc/app/msg/xml/";
 		String schemaFullPath = "C:\\spring-tool-suite\\sts-bundle\\workspace\\SmallGateController\\src\\main\\resources\\schema\\message.xsd";
 		
 		boolean JAXB_CONVERT_TEST		= false;
@@ -59,7 +59,7 @@ public class SimpleJava {
 			System.out.println("string > byte > string end.");
 		
 			SimpleJava sj = new SimpleJava();
-			recvXmlString = sj.sendRecvXmlStringToServer(serverUrl, sendXmlString);
+			recvXmlString = sj.sendRecvXmlStringToServer(serverMessageUrl, sendXmlString);
 		}
 
 	}//END OF MAIN
