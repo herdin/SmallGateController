@@ -81,12 +81,17 @@ public class GateDBServiceTest {
 			RESULT += DELETE_SUCCESS_FLAG;
 		}
 		
+		Assert.assertThat(RESULT, org.hamcrest.CoreMatchers.is(WHOLE_TEST_SUCCCESS));
+	}//END OF FUNCTION
+	
+	@Test
+	@Rollback(true)
+	public void isAccessableTest() {
 		AccessHistoryBean isAccessableBean = new AccessHistoryBean();
 		isAccessableBean.setCardId("TEST_CARD_ID");
 		isAccessableBean.setGateId("TEST_GATE_ID");
+		@SuppressWarnings("unused")
 		boolean result = gateDBService.isAccessable(isAccessableBean);
-		
-		Assert.assertThat(RESULT, org.hamcrest.CoreMatchers.is(WHOLE_TEST_SUCCCESS));
 		Assert.assertThat(true, org.hamcrest.CoreMatchers.is(true));
 	}//END OF FUNCTION
 
