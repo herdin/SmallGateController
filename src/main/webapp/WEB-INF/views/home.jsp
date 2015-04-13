@@ -1,12 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
-<html>
+<!DOCTYPE html>
 <head>
 	<title>Home</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../lib/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="../lib/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<script src="../lib/js/jquery-1.11.2.min.js"></script>
+	<script src="../lib/js/bootstrap.min.js"></script>
 <%--
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<link rel="shortcut icon" href="../../assets/ico/favicon.png">

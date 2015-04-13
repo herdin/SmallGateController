@@ -42,8 +42,15 @@ public class HomeController {
 	@Autowired
 	private CardDBService cardDbService;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) throws Exception {
+	@RequestMapping(value = "/draggable", method = RequestMethod.GET)
+	public String testdraggable(Model model) throws Exception {
+		
+		
+		return "sampleDraggable01";
+	}
+	
+	@RequestMapping(value = "/01", method = RequestMethod.GET)
+	public String test01(Locale locale, Model model) throws Exception {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		logger.debug("testDbService object id : " + this.cardDbService.hashCode());
 		
@@ -104,7 +111,7 @@ public class HomeController {
 	}//END FO home()
 	
 	@RequestMapping(value = "/xml/*", method = RequestMethod.POST)
-	public void xmlHome(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void testxml(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		//receive start.
 		BufferedInputStream reqIn = new BufferedInputStream(req.getInputStream());
@@ -133,7 +140,7 @@ public class HomeController {
 	}//END OF xmlHome()
 	
 	@RequestMapping(value = "/xml2/*", method = RequestMethod.GET)
-	public void jaxbHome(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void testxml2(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String path = Message.class.getResource("/schema").getPath() + "message.xsd";
 		logger.debug(path);
 		File file = new File(path);
