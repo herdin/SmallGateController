@@ -10,8 +10,8 @@ public class Constants {
 		REG_CARD	("regCard"),
 		REQ_ACCS	("reqAssc"),
 		
-		RES_PASS	("regPass"),
-		RES_FAIL	("regFail"),
+		RES_PASS	("resPass"),
+		RES_FAIL	("resFail"),
 		;
 		
 		private String value;
