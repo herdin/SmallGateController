@@ -35,7 +35,7 @@ public class MessageSendReceiveTest {
 		}
 		
 		if(XML_SEND_RECEIVE_TEST) {
-		
+			long startTime = System.currentTimeMillis();
 			String sendXmlString = null;
 			@SuppressWarnings("unused")
 			String recvXmlString = null;
@@ -43,7 +43,7 @@ public class MessageSendReceiveTest {
 //			message.setMessageId(MESSAGE_ID.REG_CARD.value());
 			message.setMessageId(MESSAGE_ID.REQ_ACCS.value());
 			message.setGateId("GT002");
-			message.setCardId("0101");
+			message.setCardId("0102");
 			sendXmlString = XmlConverter.convertJaxbToXml(Message.class, message, schemaFullPath);
 			byte[] bytes = sendXmlString.getBytes(StandardCharsets.UTF_8);
 			
@@ -61,6 +61,8 @@ public class MessageSendReceiveTest {
 		
 			MessageSendReceiveTest sj = new MessageSendReceiveTest();
 			recvXmlString = sj.sendRecvXmlStringToServer(serverMessageUrl, sendXmlString);
+			long endTime = System.currentTimeMillis();
+			System.out.println("end-start : " + (endTime-startTime));
 		}
 
 	}//END OF MAIN

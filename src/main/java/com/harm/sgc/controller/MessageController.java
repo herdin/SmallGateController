@@ -22,6 +22,7 @@ import com.harm.schema.message.Message;
 import com.harm.sgc.service.CardDBService;
 import com.harm.sgc.service.GateDBService;
 import com.harm.util.Constants;
+import com.harm.util.Constants.DEBUG_MESSAGE;
 import com.harm.util.Constants.ERROR_MESSAGE;
 import com.harm.util.Constants.MESSAGE_ID;
 import com.harm.util.XmlConverter;
@@ -54,6 +55,9 @@ public class MessageController {
 						sendMessage.setMessageId(MESSAGE_ID.RES_PASS.value());
 						sendMessage.setCardId(recvMessage.getCardId());
 						sendMessage.setGateId(recvMessage.getGateId());
+						logger.debug(DEBUG_MESSAGE.REG_CARD_PASS.value());
+					} else {
+						logger.debug(DEBUG_MESSAGE.REG_CARD_FAIL.value());
 					}
 					break;
 				case REQ_ACCS :
@@ -63,8 +67,10 @@ public class MessageController {
 					
 					if(gateDBService.isAccessable(accessHistoryBean)) {
 						sendMessage.setMessageId(MESSAGE_ID.RES_PASS.value());
+						logger.debug(DEBUG_MESSAGE.REQ_ACCS_PASS.value());
 					} else {
 						sendMessage.setMessageId(MESSAGE_ID.RES_FAIL.value());
+						logger.debug(DEBUG_MESSAGE.REQ_ACCS_FAIL.value());
 					}
 					sendMessage.setCardId(recvMessage.getCardId());
 					sendMessage.setGateId(recvMessage.getGateId());
@@ -72,7 +78,7 @@ public class MessageController {
 					//FIXME ADD HERE INSERT TO ACCESSHISOTRY
 					break;
 				default :
-					logger.info(ERROR_MESSAGE.INVALID_MESSAGE_ID.value());
+					logger.error(ERROR_MESSAGE.INVALID_MESSAGE_ID.value());
 					break;
 			}
 			
