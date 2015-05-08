@@ -16,7 +16,7 @@ public class MessageSendReceiveTest {
 
 	public static void main(String[] args) throws IOException {
 		
-		String serverMessageUrl = "http://localhost:8080/sgc/app/msg/xml/";
+		String serverMessageUrl = "http://localhost:8081/sgc/app/msg/xml/";
 		String schemaFullPath = "C:\\spring-tool-suite\\sts-bundle\\workspace\\SmallGateController\\src\\main\\resources\\schema\\message.xsd";
 		
 		boolean JAXB_CONVERT_TEST		= false;
@@ -42,8 +42,8 @@ public class MessageSendReceiveTest {
 			Message message = new Message();
 //			message.setMessageId(MESSAGE_ID.REG_CARD.value());
 			message.setMessageId(MESSAGE_ID.REQ_ACCS.value());
-			message.setGateId("GT002");
-			message.setCardId("0102");
+			message.setGateId("GT000");
+			message.setCardId("0101");
 			sendXmlString = XmlConverter.convertJaxbToXml(Message.class, message, schemaFullPath);
 			byte[] bytes = sendXmlString.getBytes(StandardCharsets.UTF_8);
 			

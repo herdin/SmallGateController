@@ -5,6 +5,8 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.harm.bean.AccessHistoryBean;
 import com.harm.bean.CardBean;
 import com.harm.schema.message.Message;
+import com.harm.sgc.service.AccessHistoryDBService;
 import com.harm.sgc.service.CardDBService;
 import com.harm.sgc.service.GateDBService;
 import com.harm.util.Constants;
@@ -39,12 +42,17 @@ public class MessageController {
 	@Autowired
 	private GateDBService gateDBService;
 	
+	@Autowired
+	private AccessHistoryDBService accessHistoryDBService;
+	
 	@RequestMapping(value = "/xml", method = RequestMethod.POST)
 	public void xmlProcessor(HttpServletRequest req, HttpServletResponse res) {
 		try {
-			Message sendMessage = new Message();
+			
 			Message recvMessage = this.recvMessageObjectFromReq(req);
 			MESSAGE_ID recvMessageId = distinguishingMessageId(recvMessage);
+			
+			Message sendMessage = new Message();
 			
 			switch (recvMessageId) {
 				case REG_CARD :
@@ -59,13 +67,17 @@ public class MessageController {
 					} else {
 						logger.debug(DEBUG_MESSAGE.REG_CARD_FAIL.value());
 					}
+					
+					this.sendMessageObjectToRes(res, sendMessage);
 					break;
 				case REQ_ACCS :
+					boolean isAccessable = false;
 					AccessHistoryBean accessHistoryBean = new AccessHistoryBean();
 					accessHistoryBean.setCardId(recvMessage.getCardId());
 					accessHistoryBean.setGateId(recvMessage.getGateId());
 					
 					if(gateDBService.isAccessable(accessHistoryBean)) {
+						isAccessable = true;
 						sendMessage.setMessageId(MESSAGE_ID.RES_PASS.value());
 						logger.debug(DEBUG_MESSAGE.REQ_ACCS_PASS.value());
 					} else {
@@ -75,17 +87,24 @@ public class MessageController {
 					sendMessage.setCardId(recvMessage.getCardId());
 					sendMessage.setGateId(recvMessage.getGateId());
 					
-					//FIXME ADD HERE INSERT TO ACCESSHISOTRY
+					this.sendMessageObjectToRes(res, sendMessage);
+					
+					if(isAccessable) {
+						accessHistoryBean.setAccessDate(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+					
+						if(accessHistoryDBService.insert(accessHistoryBean) == 1) {
+							logger.debug(DEBUG_MESSAGE.INSERT_ACCESS_HISTORY_PASS.value());
+						} else {
+							logger.debug(DEBUG_MESSAGE.INSERT_ACCESS_HISTORY_FAIL.value());
+						}
+					}
+					
 					break;
 				default :
 					logger.error(ERROR_MESSAGE.INVALID_MESSAGE_ID.value());
 					break;
-			}
+			}//END OF SWITCH : RECEIVED MESSAGE ID
 			
-			if(sendMessage.getMessageId() != null) {
-				this.sendMessageObjectToRes(res, sendMessage);
-			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}

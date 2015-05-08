@@ -3,7 +3,39 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="AccessHistoryMapper">
-	
+
+	<resultMap id="AccessHistoryBeanResultMap" type="com.harm.bean.AccessHistoryBean">
+		<result	property="cardId"			column="CARD_ID"		/>
+		<result	property="gateId"			column="GATE_ID"		/>
+		<result	property="accessDate"		column="ACCESS_DATE"	/>
+	</resultMap>
+
+	<select id="selectAccessHistory" parameterType="com.harm.bean.AccessHistoryBean" resultMap="AccessHistoryBeanResultMap" >
+	SELECT	  CARD_ID
+			, GATE_ID
+			, ACCESS_DATE
+	FROM	ACCESSHISTORY
+	WHERE	1 = 1
+			<if test="cardId != null">
+			AND CARD_ID = #{cardId}			</if>
+			<if test="gateId != null">
+			AND	GATE_ID = #{gateId}			</if>
+			<if test="accessDate != null">
+			AND ACCESS_DATE = #{accessDate}	</if>
+	</select>	
+
+	<insert id="insertAccessHistory" parameterType="com.harm.bean.AccessHistoryBean">
+	INSERT INTO ACCESSHISTORY
+			(CARD_ID,	GATE_ID,	ACCESS_DATE)
+	VALUES	(#{cardId},	#{gateId},	#{accessDate})
+	</insert>
+
+	<delete id="deleteAccessHistory" parameterType="com.harm.bean.AccessHistoryBean">
+	DELETE FROM	ACCESSHISTORY
+	WHERE	CARD_ID = #{cardId}	AND
+			GATE_ID = #{gateId} AND
+			ACCESS_DATE = #{accessDate}	
+	</delete>
 
 	
 </mapper>

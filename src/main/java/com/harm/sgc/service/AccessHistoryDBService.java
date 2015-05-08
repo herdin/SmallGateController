@@ -8,31 +8,30 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
-import com.harm.bean.CardBean;
+import com.harm.bean.AccessHistoryBean;
 
-//@Service
 @Repository
-public class CardDBService implements DBService<CardBean> {
+public class AccessHistoryDBService implements DBService<AccessHistoryBean> {
 
 	@Autowired
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<CardBean> select(CardBean param) {
-		List<CardBean> results = null;
+	public List<AccessHistoryBean> select(AccessHistoryBean param) {
+		List<AccessHistoryBean> results = null;
 		try {
-			results = sqlSession.selectList("CardMapper.selectCard", param);
+			results = sqlSession.selectList("AccessHistoryMapper.selectAccessHistory", param);
 		} catch (DataAccessException e) {
 			logger.error(e.getMessage(), e);
 		}
 		return results;
 	}//END OF FUNCTION
-
+	
 	@Override
-	public int insert(CardBean param) {
+	public int insert(AccessHistoryBean param) {
 		int result = -1;
 		try {
-			result = sqlSession.insert("CardMapper.insertCard", param);
+			result = sqlSession.insert("AccessHistoryMapper.insertAccessHistory", param);
 		} catch (DataAccessException e) {
 			if(e instanceof DuplicateKeyException) {
 				logger.error(e.getMessage(), e);
@@ -42,21 +41,20 @@ public class CardDBService implements DBService<CardBean> {
 	}//END OF FUNCTION
 
 	@Override
-	public int update(CardBean param) {
-		int result = -1;
+	public int update(AccessHistoryBean param) {
 		try {
-			result = sqlSession.update("CardMapper.updateCard", param);
+			throw new DataAccessException("update is not allowed in AccessHistoryDBService.") { private static final long serialVersionUID = 1L;};
 		} catch (DataAccessException e) {
 			logger.error(e.getMessage(), e);
 		}
-		return result;
+		return -1;
 	}//END OF FUNCTION
 
 	@Override
-	public int delete(CardBean param) {
+	public int delete(AccessHistoryBean param) {
 		int result = -1;
 		try {
-			result = sqlSession.delete("CardMapper.deleteCard", param);
+			result = sqlSession.delete("AccessHistoryMapper.deleteAccessHistory", param);
 		} catch (DataAccessException e) {
 			logger.error(e.getMessage(), e);
 		}

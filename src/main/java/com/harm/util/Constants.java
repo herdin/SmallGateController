@@ -30,7 +30,10 @@ public class Constants {
 		REG_CARD_FAIL	("register card fail"),
 		
 		REQ_ACCS_PASS	("request access pass"),
-		REQ_ACCS_FAIL	("request access fail");
+		REQ_ACCS_FAIL	("request access fail"),
+		
+		INSERT_ACCESS_HISTORY_PASS("insert access history pass"),
+		INSERT_ACCESS_HISTORY_FAIL("insert access history fail");
 		private String value;
 		private DEBUG_MESSAGE(String value) { this.value = value; }
 		public String value() { return this.value; }
