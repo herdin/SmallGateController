@@ -21,7 +21,9 @@ public class WebController {
 	@RequestMapping(value = "/areaForm", method = RequestMethod.GET)
 	public String areaForm(Model model) throws Exception {
 		return "areaForm";
-	}//END OF FUNCTION	
+	}//END OF FUNCTION
+	
+	
 
 	@RequestMapping(value = "/gateForm", method = RequestMethod.GET)
 	public String gateForm(Model model) throws Exception {

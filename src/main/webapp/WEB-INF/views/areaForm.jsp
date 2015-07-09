@@ -28,13 +28,22 @@
 </div>
 
 <script type="text/javascript">
+//http://www.javacodegeeks.com/2012/02/spring-mvc-and-jquery-for-ajax-form.html
 $(document).ready(function(){
 	$("#save").click(function(){
         $.ajax({
         	url: "",
-        	success:	function(result){
-            				alert("success");
-        				}
+        	data: {
+        		areaId:"$()"	
+        	},
+        	dataType: "json",
+        	success: function(result){
+            	alert("success");
+        	},
+        	error: function(result){
+        		alert("error");
+        	}
+        	
         });
 	});	
 });
