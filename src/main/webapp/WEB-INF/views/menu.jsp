@@ -38,12 +38,14 @@
        </div>
        <div class="navbar-collapse collapse">
          <ul class="nav navbar-nav">
-         	<li class="active"><a href="#" id="area">Area</a></li>
-         	<li><a href="#">Gate</a></li>
-         	<li><a href="#">Group</a></li>
-           <li><a href="#">Card</a></li>
-           <li class="dropdown">
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+         	<li class="active">
+         		<a href="#" id="area">Area</a></li>
+         	<li><a href="#" id="gate">Gate</a></li>
+         	<li><a href="#" id="group">Group</a></li>
+			<li><a href="#" id="card">Card</a></li>
+			
+			<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
              <ul class="dropdown-menu">
                <li><a href="#">Action</a></li>
                <li><a href="#">Another action</a></li>
@@ -86,8 +88,11 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#area").click(function(){
-		$("#content").load("sampleForm");
-	});	
+		$("#content").load("areaForm");
+	});
+	$("#gate").click(function(){
+		$("#content").load("gateForm");
+	});
 });
 </script>
 </body>
