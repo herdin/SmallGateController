@@ -16,7 +16,7 @@ public class MessageSendReceiveTest {
 
 	public static void main(String[] args) throws IOException {
 		
-		String serverMessageUrl = "http://localhost:8080/sgc/app/msg/xml/";
+		String serverMessageUrl = "http://localhost:8081/sgc/app/msg/xml/";
 		String schemaFullPath = "C:\\spring-tool-suite\\sts-bundle\\workspace\\SmallGateController\\src\\main\\resources\\schema\\message.xsd";
 		
 		boolean JAXB_CONVERT_TEST		= false;
@@ -35,14 +35,14 @@ public class MessageSendReceiveTest {
 		}
 		
 		if(XML_SEND_RECEIVE_TEST) {
-		
+			long startTime = System.currentTimeMillis();
 			String sendXmlString = null;
 			@SuppressWarnings("unused")
 			String recvXmlString = null;
 			Message message = new Message();
 //			message.setMessageId(MESSAGE_ID.REG_CARD.value());
 			message.setMessageId(MESSAGE_ID.REQ_ACCS.value());
-			message.setGateId("GT002");
+			message.setGateId("GT000");
 			message.setCardId("0101");
 			sendXmlString = XmlConverter.convertJaxbToXml(Message.class, message, schemaFullPath);
 			byte[] bytes = sendXmlString.getBytes(StandardCharsets.UTF_8);
@@ -61,6 +61,8 @@ public class MessageSendReceiveTest {
 		
 			MessageSendReceiveTest sj = new MessageSendReceiveTest();
 			recvXmlString = sj.sendRecvXmlStringToServer(serverMessageUrl, sendXmlString);
+			long endTime = System.currentTimeMillis();
+			System.out.println("end-start : " + (endTime-startTime));
 		}
 
 	}//END OF MAIN
