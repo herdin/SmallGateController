@@ -22,13 +22,27 @@ public class WebController {
 	public String areaForm(Model model) throws Exception {
 		return "areaForm";
 	}//END OF FUNCTION
-	
-	
 
+	@RequestMapping(value = "/areaSave", method = RequestMethod.POST)
+	public void areaSave(Model model) throws Exception {
+		
+	}
+	
 	@RequestMapping(value = "/gateForm", method = RequestMethod.GET)
 	public String gateForm(Model model) throws Exception {
 		return "gateForm";
 	}//END OF FUNCTION
+	
+	@RequestMapping(value = "/groupForm", method = RequestMethod.GET)
+	public String groupForm(Model model) throws Exception {
+		return "groupForm";
+	}//END OF FUNCTION
+	
+	@RequestMapping(value = "/cardForm", method = RequestMethod.GET)
+	public String cardForm(Model model) throws Exception {
+		return "cardForm";
+	}//END OF FUNCTION
+	
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model) throws Exception {

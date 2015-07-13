@@ -13,37 +13,28 @@
 </head>
 <body>
 
-<h3>Hello areaForm!</h3>
+<h3>Hello groupForm!</h3>
 
 <div class="form-group col-md-4">
-	AREA ID
-	<input id="areaId" type="text" class="form-control" value=""/>	
+	GROUP ID
+	<input id="groupId" type="text" class="form-control" value=""/>	
 </div>
 <div class="form-group col-md-4">
-	AREA DESCRIPTION
-	<input id="areaDesc" type="text" class="form-control" value=""/>	
+	GROUP DESCRIPTION
+	<input id="groupDesc" type="text" class="form-control" value=""/>	
 </div>
 <div class="form-group col-md-4">
 	<input type="button" id="save" class="btn btn-default" value="save" />
 </div>
 
 <script type="text/javascript">
-//http://www.javacodegeeks.com/2012/02/spring-mvc-and-jquery-for-ajax-form.html
 $(document).ready(function(){
 	$("#save").click(function(){
         $.ajax({
         	url: "",
-        	data: {
-        		areaId:"$()"	
-        	},
-        	dataType: "json",
-        	success: function(result){
-            	alert("success");
-        	},
-        	error: function(result){
-        		alert("error");
-        	}
-        	
+        	success:	function(result){
+            				alert("success");
+        				}
         });
 	});	
 });

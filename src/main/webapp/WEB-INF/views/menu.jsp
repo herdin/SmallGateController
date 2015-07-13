@@ -93,6 +93,12 @@ $(document).ready(function(){
 	$("#gate").click(function(){
 		$("#content").load("gateForm");
 	});
+	$("#group").click(function(){
+		$("#content").load("groupForm");
+	});
+	$("#card").click(function(){
+		$("#content").load("cardForm");
+	});
 });
 </script>
 </body>
